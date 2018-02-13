@@ -7,8 +7,15 @@ there are two containers:
 
 both docker containers are build up from the sebp/elk docker image
 
-to run services just issue a command: docker-compose up --build
+to run services just issue a command: 
+```
+docker-compose up --build
+```
 
+
+all the information below left as is from the parent repository
+
+----
 
 # ElastiFlow&trade;
 ElastiFlow&trade; provides network flow data collection and visualization using the Elastic Stack. As of version 2.0.0 it supports Netflow v5/v9, sFlow and IPFIX flow types (1.x versions support only Netflow v5/v9).
