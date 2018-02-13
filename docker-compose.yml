@@ -1,0 +1,47 @@
+version: '2'
+services:
+  elastiflow:
+    build: .
+    container_name: elastiflow
+    environment:
+     - cluster.name=docker-cluster
+     - bootstrap.memory_lock=true
+     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - "./logstash/elastiflow:/etc/logstash"
+      - "./kibana:/etc/kibana"
+      - "elk-data:/var/lib/elasticsearch"
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "2055:2055/udp"
+    networks:
+      - elknet
+
+  elastic.slave:
+    build: 
+      context: .
+      dockerfile: Dockerfile.elastic.slave
+    image: elastic.slave
+    environment:
+     - LOGSTASH_START=0
+     - KIBANA_START=0
+     - cluster.name=docker-cluster
+#     - bootstrap.memory_lock=true
+     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - "elk-data2:/var/lib/elasticsearch"
+    networks:
+      - elknet
+    links:
+      - elastiflow:elk
+    depends_on:
+      - elastiflow
+
+volumes:
+  elk-data:
+    driver: local
+  elk-data2: 
+    driver: local
+networks:
+  elknet:

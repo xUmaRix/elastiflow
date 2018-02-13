@@ -1,0 +1,12 @@
+FROM sebp/elk:600
+
+WORKDIR ${LOGSTASH_HOME}
+
+# optional http proxy
+#ENV http_proxy="http://10.2.1.0:8118"
+#ENV https_proxy=$http_proxy
+#ENV JRUBY_OPTS="-J-Dhttp.proxyHost=10.2.1.0 -J-Dhttp.proxyPort=8118"
+
+RUN gosu logstash bin/logstash-plugin install logstash-filter-translate
+RUN gosu logstash bin/logstash-plugin install logstash-filter-cidr
+RUN gosu logstash bin/logstash-plugin update logstash-codec-netflow

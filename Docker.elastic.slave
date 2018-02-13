@@ -1,0 +1,9 @@
+# this docker file is intended to run just elastic shard with no logstash o kibana
+# so this docker image should be run with environment variables ( docker run ... -e )
+# LOGSTASH_START=0
+# KIBANA_START=0
+
+FROM sebp/elk
+
+# configure elasticsearch to act as a slave node
+ADD elasticsearch-slave.yml /etc/elasticsearch/elasticsearch.yml
