@@ -1,7 +1,9 @@
 version: '2'
 services:
   elastiflow:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.elastiflow      
     container_name: elastiflow
     environment:
      - cluster.name=docker-cluster
@@ -21,7 +23,7 @@ services:
   elastic.slave:
     build: 
       context: .
-      dockerfile: Dockerfile.elastic.slave
+      dockerfile: Docker.elastic.slave
     image: elastic.slave
     environment:
      - LOGSTASH_START=0
